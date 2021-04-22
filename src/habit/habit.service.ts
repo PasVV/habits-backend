@@ -3,7 +3,6 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateResult, DeleteResult } from 'typeorm';
 import { Habit } from './habit.entity';
-import { Measure } from '../measure/measure.entity';
 import { User } from '../user/user.entity';
 
 @Injectable()
@@ -11,8 +10,6 @@ export class HabitsService {
   constructor(
     @InjectRepository(Habit)
     private habitRepository: Repository<Habit>,
-    @InjectRepository(Measure)
-    private measureRepository: Repository<Measure>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
@@ -22,6 +19,19 @@ export class HabitsService {
   }
 
   async create(habit: Habit): Promise<Habit> {
+    const parsedDate = new Date(habit.dateTo);
+
+    if (
+      !(parsedDate instanceof Date) ||
+      isNaN((parsedDate as unknown) as number)
+    ) {
+      throw new Error(
+        'Не удалось распарсить дату окончания. Ожидается Date() совместимая строка (ISO).',
+      );
+    }
+
+    habit.dateTo = parsedDate.getTime();
+
     return await this.habitRepository.save(habit);
   }
 

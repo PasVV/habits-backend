@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -21,7 +23,14 @@ export class HabitsController {
 
   @Post('create')
   async create(@Body() habitData: Habit): Promise<any> {
-    return this.habitsService.create(habitData);
+    return this.habitsService.create(habitData).catch((e) => {
+      return new HttpException(
+        {
+          error: e.message,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    });
   }
 
   @Put(':id/update')

@@ -12,7 +12,7 @@ import { MeasureModule } from './measure/measure.module';
       type: 'sqlite',
       database: __dirname + '/database.db',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: false,
+      synchronize: true,
     }),
     UserModule,
     HabitModule,
