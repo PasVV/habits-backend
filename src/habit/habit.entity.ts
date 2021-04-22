@@ -31,7 +31,7 @@ export class Habit {
   increaseInterval: number; // in minutes
 
   @Column({ nullable: false })
-  dateTo: number; // UNIX timestamp
+  dateTo: Date;
 
   @ManyToOne(() => Measure, (measure) => measure.habits)
   measure: Measure;

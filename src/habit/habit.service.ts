@@ -30,7 +30,7 @@ export class HabitsService {
       );
     }
 
-    habit.dateTo = parsedDate.getTime();
+    habit.dateTo = parsedDate;
 
     return await this.habitRepository.save(habit);
   }
