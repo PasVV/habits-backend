@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Measure } from '../measure/measure.entity';
 
-enum HabitType {
+export enum HabitType {
   Common,
   WithProgress,
 }

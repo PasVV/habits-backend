@@ -12,7 +12,7 @@ export class Task {
   @Column({ nullable: true })
   donePercent: number;
 
-  @Column()
+  @Column({ nullable: true })
   completeDate: Date;
 
   @ManyToOne(() => Habit)
