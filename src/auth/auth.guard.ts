@@ -16,13 +16,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const b64Token = request.headers.authorization?.replace('Bearer ', '');
-      const JSONToken = Buffer.from(b64Token, 'base64').toString();
-      const token = JSON.parse(JSONToken);
-
-      if (!token.id || !token.email) {
-        return Promise.reject();
-      }
+      parseToken(request);
     } catch (e) {
       throw new HttpException(
         'Не удалось распарсить токен',
@@ -31,5 +25,21 @@ export class AuthGuard implements CanActivate {
     }
 
     return true;
+  }
+}
+
+export function parseToken(request: any) {
+  try {
+    const b64Token = request.headers.authorization?.replace('Bearer ', '');
+    const JSONToken = Buffer.from(b64Token, 'base64').toString();
+    const token = JSON.parse(JSONToken);
+
+    if (!token.id || !token.email) {
+      return Promise.reject();
+    }
+
+    return token;
+  } catch (e) {
+    throw new Error('Не удалось распарсить токен');
   }
 }

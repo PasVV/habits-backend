@@ -8,9 +8,12 @@ import {
   Param,
   Post,
   Put,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { Habit } from './habit.entity';
 import { HabitsService } from './habit.service';
+import { parseToken } from '../auth/auth.guard';
 
 @Controller('habits')
 export class HabitsController {
@@ -22,8 +25,13 @@ export class HabitsController {
   }
 
   @Post('create')
-  async create(@Body() habitData: Habit): Promise<any> {
-    return this.habitsService.create(habitData).catch((e) => {
+  async create(
+    @Body() habitData: Habit,
+    @Req() request: Request,
+  ): Promise<any> {
+    const { id } = parseToken(request);
+
+    return this.habitsService.create({ ...habitData, user: id }).catch((e) => {
       return new HttpException(
         {
           error: e.message,
