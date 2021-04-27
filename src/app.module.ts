@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { HabitModule } from './habit/habit.module';
 import { MeasureModule } from './measure/measure.module';
 import { TaskModule } from './task/task.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,8 +20,7 @@ import { TaskModule } from './task/task.module';
     HabitModule,
     MeasureModule,
     TaskModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
