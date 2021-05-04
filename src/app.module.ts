@@ -6,6 +6,7 @@ import { HabitModule } from './habit/habit.module';
 import { MeasureModule } from './measure/measure.module';
 import { TaskModule } from './task/task.module';
 import { AuthModule } from './auth/auth.module';
+import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
     MeasureModule,
     TaskModule,
     AuthModule,
+    SeederModule,
   ],
 })
 export class AppModule {}

@@ -34,8 +34,8 @@ export class Habit {
   dateTo: Date;
 
   @ManyToOne(() => Measure, (measure) => measure.habits)
-  measure: Measure;
+  measure: Measure | number;
 
   @ManyToOne(() => User, (user) => user.habits)
-  user: User;
+  user: User | number;
 }
