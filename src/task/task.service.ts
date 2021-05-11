@@ -14,7 +14,9 @@ export class TasksService {
     private taskRepository: Repository<Task>,
     @InjectRepository(Habit)
     private habitRepository: Repository<Habit>,
-  ) {}
+  ) {
+    this.handleCron();
+  }
 
   async findAll(): Promise<Task[]> {
     return await this.taskRepository.find({ relations: ['habit'] });
