@@ -15,7 +15,9 @@ export class TasksService {
     @InjectRepository(Habit)
     private habitRepository: Repository<Habit>,
   ) {
-    this.handleCron();
+    setTimeout(() => {
+      this.handleCron();
+    }, 10000);
   }
 
   async findAll(): Promise<Task[]> {
