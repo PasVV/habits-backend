@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
-import { UserCredentials } from './types';
+import { LoginReturns, UserCredentials } from './types';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +11,7 @@ export class AuthService {
     private userRepository: Repository<User>,
   ) {}
 
-  async login(credentials: UserCredentials): Promise<string> {
+  async login(credentials: UserCredentials): Promise<LoginReturns> {
     const user = await this.userRepository.findOne({
       where: { email: credentials.login },
       select: ['id', 'name', 'email', 'password'],
@@ -23,6 +23,9 @@ export class AuthService {
 
     const { id, email } = user;
 
-    return Buffer.from(JSON.stringify({ id, email })).toString('base64');
+    return {
+      token: Buffer.from(JSON.stringify({ id, email })).toString('base64'),
+      user: { ...user, password: undefined },
+    };
   }
 }
