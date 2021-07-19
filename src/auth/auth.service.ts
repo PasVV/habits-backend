@@ -21,10 +21,12 @@ export class AuthService {
       throw new Error('Неверный логин или пароль.');
     }
 
-    const { id, email } = user;
+    const { id, email, name } = user;
 
     return {
-      token: Buffer.from(JSON.stringify({ id, email })).toString('base64'),
+      token: Buffer.from(JSON.stringify({ id, email, name })).toString(
+        'base64',
+      ),
       user: { ...user, password: undefined },
     };
   }
